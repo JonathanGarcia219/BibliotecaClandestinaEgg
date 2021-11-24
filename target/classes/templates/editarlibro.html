@@ -40,30 +40,31 @@
         </div>
         <div class="row d.flex w-100 justify-content-around">
             <div class="col-md-6">
-                <form class="form-row " method="get" action="">
+                <form class="form-row " method="post" th:action="@{/editarlibro}"th:object="${libro}">
+                    <input hidden th:field="*{id}">
                     <div class="col-2">
                         <label for="">Isbn</label>
                     </div>
                     <div class="col-10 mb-3">
-                        <input class="form-control w-100" type="number">
+                        <input class="form-control w-100" type="text" th:placeholder="${libro.isbn}">
                     </div>
                     <div class="col-2">
                         <label for="">Titulo</label>
                     </div>
                     <div class="col-10 mb-3">
-                        <input class="form-control w-100" type="text">
+                        <input class="form-control w-100" type="text" th:placeholder="${libro.titulo}">
                     </div>
                     <div class="col-2">
                         <label for="">Año</label>
                     </div>
                     <div class="col-10 mb-3">
-                        <input class="form-control w-100" type="text">
+                        <input class="form-control w-100" type="text" th:placeholder="${libro.anio}">
                     </div>
                     <div class="col-2">
                         <label for="">Ejemplares</label>
                     </div>
                     <div class="col-10 mb-3">
-                        <input class="form-control w-100" type="number">
+                        <input class="form-control w-100" type="number" th:placeholder="${libro.emplares}">
                     </div>
                     <div class="col-2">
                         <label for="">Ejemplares Prestados</label>
@@ -81,8 +82,8 @@
                         <label for="">Autor</label>
                     </div>
                     <div class="col-10 mb-3">
-                        <select class="form-control" name="Autores" id="">
-                            <option value="">Selecciona un Autor</option>
+                        <select class="form-control" th:field="*{autor}" >
+                            <option th:each="a : ${listaautor}" th:text="${a.nombre}" th:value="${a.id}">Selecciona un Autor</option>
                         </select>
                     </div>
                     <div class="col-2">
@@ -90,9 +91,9 @@
                     </div>
                     <div class="col-10 mb-3">
                         
-                        <select class="form-control" name="Editorial" id="">
-                            <option value="">Selecciona una Editorial</option>
-                        </select>
+                        <select class="form-control" th:field="*{editorial}">
+                            <option th:each="e : ${listaeditorial}" th:text="${e.nombre}" th:value="${e.id}">Selecciona una Editorial</option>
+                        </select>  
                     </div>
                     <div class="col-12 mt-3 mb-3">
                         <button class="btn btn-dark btn-block w-100" type="submit">Crear</button>

@@ -55,23 +55,23 @@
                 <div class="col-md-3 px-0"><button class="btn btn-dark btn-block px-0" type="button">Buscar</button></div>
             </form>
         </div>
-        <div class="row mt-5"><!--Contenedor de la fila-->
+        <div class="row mt-5" th:each = "l,iterator : ${listalibros}"><!--Contenedor de la fila-->
             <div class="col-sm-12 col-md-4 mb-3"><!--libro-->
                 <ul class="list-group ">
-                    <li class="list-group-item bg-dark text-light">Id</li>
+                    <li class="list-group-item bg-dark text-light">ISBN: <span th:text="${l.isbn}"></span></li>
                     <li class="list-group-item">
-                        <h3>Libro</h3>
+                        <h3>Titulo: <span th:text="${l.titulo}"></span></h3>
                     </li>
                     <li class="list-group-item font-weight-bold ">
                         <div class="d-flex w-100 justify-content-between ">
                             <h5 class="mb-0">Año:</h5>
-                            <p class="mb-0 font-weight-normal">1984</p>
+                            <p class="mb-0 font-weight-normal" th:text="${l.anio}"></p>
                         </div>
                     </li>
                     <li class="list-group-item font-weight-bold">
                         <div class="d-flex w-100 justify-content-between ">
                             <h5 class="mb-0">Ejemplares:</h5>
-                            <p class="mb-0 font-weight-normal">null</p>
+                            <p class="mb-0 font-weight-normal" th:text="${l.emplares}"></p>
                         </div>
                     </li>
                     <li class="list-group-item font-weight-bold">
@@ -89,18 +89,18 @@
                     <li class="list-group-item font-weight-bold">
                         <div class="d-flex w-100 justify-content-between ">
                             <h5 class="mb-0">Autor</h5>
-                            <p class="mb-0 font-weight-normal">null</p>
+                            <p class="mb-0 font-weight-normal" th:text="${l.autor.nombre}"></p>
                         </div>
                     </li>
                     <li class="list-group-item font-weight-bold">
                         <div class="d-flex w-100 justify-content-between ">
                             <h5 class="mb-0">Editorial</h5>
-                            <p class="mb-0 font-weight-normal">null</p>
+                            <p class="mb-0 font-weight-normal" th:text="${l.editorial.nombre}"></p>
                         </div>
                     </li>
                     <li class="list-group-item font-weight-bold">
                         <div class="d-flex w-100 justify-content-end ">
-                           <a class=" btn btn-dark btn-sm mr-2 " href="#"> Editar</a> 
+                           <a class=" btn btn-dark btn-sm mr-2 " th:href="@{/editarlibro}+'?id='+${l.id}"> Editar</a> 
                             <a class="btn btn-danger btn-sm " href="#"> Eliminar</a>
                         </div>
                     </li>

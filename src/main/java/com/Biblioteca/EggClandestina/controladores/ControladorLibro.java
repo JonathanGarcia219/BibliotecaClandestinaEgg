@@ -54,6 +54,12 @@ public class ControladorLibro {
         } else {
             EntidadLibro aux = new EntidadLibro();
             aux.setAlta(Boolean.TRUE);
+            
+            aux.setAnio(0);
+            aux.setEmplares(10);
+            aux.setIsbn("");
+            aux.setTitulo("");
+            
             modelo.addAttribute("libro",aux);
         } 
         
@@ -65,6 +71,7 @@ public class ControladorLibro {
     
     @PostMapping("/crearlibro")
     public String formularioLibro(ModelMap modelo,RedirectAttributes redirectAtr,@ModelAttribute EntidadLibro libro) throws ErrorServicio {
+        System.out.println("INGRESANDO EL POST");
         
         try {
             
@@ -81,7 +88,13 @@ public class ControladorLibro {
     
     
     @GetMapping("/libro")
-    public String listarTodos(){
+    public String listarTodos(ModelMap modelo){
+        
+        
+      List <EntidadLibro> listaTodos = servLibro.buscaTodos();
+        
+      modelo.addAttribute("listalibros", listaTodos);
+      
         return "libro";
     }
 
@@ -91,12 +104,39 @@ public class ControladorLibro {
     }
     
     @GetMapping("/editarlibro")
-    public String editarLibro(){
+    public String editarLibro(ModelMap modelo,@RequestParam(required=false)String id){
+        
+        
+        
+        Optional <EntidadLibro> op = servLibro.buscarPorId(id);
+        List <EntidadAutor> autores = servAutor.listaAutor();
+        List <EntidadEditorial> editoriales = servEditorial.listaEditorial();
+        
+        modelo.addAttribute("listaautor",autores);
+        modelo.addAttribute("listaeditorial",editoriales);
+        
+        if (op.isPresent()) {
+            
+            
+            modelo.addAttribute("libro", op.get());
+        }
+        
         return "editarlibro";
     }
     
     @PostMapping("/editarlibro")
-    public String editar(){
-        return "editarlibro";
+    public String editar(ModelMap modelo,RedirectAttributes redirectAtr,@ModelAttribute EntidadLibro libro){
+        
+            try {
+            servLibro.modificar(libro);
+            modelo.put("exito", "Libro guardado exitosamente.");
+            return  "redirect:/editarlibro";
+            }catch (ErrorServicio e){
+                
+                return  "redirect:/editarlibro";
+            }
+       
     }
+    
+    
 }
